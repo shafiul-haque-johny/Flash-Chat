@@ -20,24 +20,36 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     controller = AnimationController(
       vsync: this,
       duration: Duration(
-        milliseconds: 1000,
+        milliseconds: 1500,
       ),
-      upperBound: 100.0,
+      //upperBound: 100.0,
     );
+
+    //animation = CurvedAnimation(parent: controller, curve: Curves.decelerate,);
+
+    animation = ColorTween(begin: Colors.blueGrey, end: Colors.white)
+        .animate(controller);
 
     controller.forward();
 
     controller.addListener(() {
       setState(() {});
-      print(controller.value);
+      //print(controller.value);
+      print(animation.value);
     });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       //backgroundColor: Colors.green.withOpacity(controller.value),
-      backgroundColor: Colors.white,
+      backgroundColor: animation.value,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -50,7 +62,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   tag: 'logo',
                   child: Container(
                     child: Image.asset('images/logo.png'),
-                    height: controller.value,
+                    //height: controller.value,
+                    height: 60.0,
                   ),
                 ),
                 Text(
